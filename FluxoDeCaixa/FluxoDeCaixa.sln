@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identidade", "Identidade", "{CEBAAD7A-4F7C-48A1-8F6A-992E9EC5641F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lancamentos", "Lancamentos", "{0EBA33CB-EB42-471B-8096-49D24D8C50D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Relatorios", "Relatorios", "{4823C3D0-C303-4301-9A08-9AC458FA46AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Identidade", "API.Identidade\API.Identidade.csproj", "{D3A3A445-2A53-4145-8386-429FBCC8F9A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{275CCB7B-2294-4A49-88DE-A3AD6789F65E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3A3A445-2A53-4145-8386-429FBCC8F9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A3A445-2A53-4145-8386-429FBCC8F9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A3A445-2A53-4145-8386-429FBCC8F9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A3A445-2A53-4145-8386-429FBCC8F9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3A3A445-2A53-4145-8386-429FBCC8F9A1} = {CEBAAD7A-4F7C-48A1-8F6A-992E9EC5641F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B9BD415-49AA-4B65-8A00-A2A9EF80C3C8}
+	EndGlobalSection
+EndGlobal
