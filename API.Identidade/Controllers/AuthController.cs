@@ -43,5 +43,21 @@ namespace API.Identidade.Controllers
                 return CustomResponse();
             }
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(UserLoginModel userLoginModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await _authenticationService.SignInManager.PasswordSignInAsync(userLoginModel.Email,
+                userLoginModel.Password,
+                false,
+                true);
+
+            if (result.Succeeded)
+                return CustomResponse(await _authenticationService.GenerateJwt(userLoginModel.Email));
+            else
+                return CustomResponse("Login incorreto");
+        }
     }
 }
