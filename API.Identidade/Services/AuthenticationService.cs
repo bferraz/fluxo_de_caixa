@@ -17,17 +17,14 @@ namespace API.Identidade.Services
         public readonly SignInManager<IdentityUser> SignInManager;
         public readonly UserManager<IdentityUser> UserManager;
 
-        private readonly IAspNetUser _aspNetUser;
         private readonly IConfiguration _configuration;
 
         public AuthenticationService(SignInManager<IdentityUser> signInManager, 
-            UserManager<IdentityUser> userManager, 
-            IAspNetUser aspNetUser,
+            UserManager<IdentityUser> userManager,
             IConfiguration configuration)
         {
             SignInManager = signInManager;
             UserManager = userManager;
-            _aspNetUser = aspNetUser;
             _configuration = configuration;
         }
 

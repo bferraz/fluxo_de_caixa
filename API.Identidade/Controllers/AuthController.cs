@@ -32,7 +32,7 @@ namespace API.Identidade.Controllers
             var result = await _authenticationService.UserManager.CreateAsync(user, userRegistryModel.Password);
 
             if (result.Succeeded)
-                return CustomResponse("Usuario caadastrado com sucesso!"); // TODO: Refatorar
+                return CustomResponse(await _authenticationService.GenerateJwt(userRegistryModel.Email));
             else
             {
                 foreach (var error in result.Errors)

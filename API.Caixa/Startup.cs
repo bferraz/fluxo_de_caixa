@@ -1,11 +1,11 @@
+using API.Caixa.Configuration;
 using API.Core.Identity;
-using API.Identidade.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace API.Identidade
+namespace API.Caixa
 {
     public class Startup
     {
@@ -19,8 +19,6 @@ namespace API.Identidade
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiConfiguration();
-
-            services.AddIdentityConfiguration(Configuration);
 
             services.AddJwtConfiguration(Configuration);
         }
