@@ -1,5 +1,6 @@
 ﻿using API.Caixa.Domain.Repositories.Base;
 using System;
+using System.Threading.Tasks.Sources;
 
 namespace API.Caixa.Domain.Entities
 {
@@ -7,5 +8,8 @@ namespace API.Caixa.Domain.Entities
     {
         public double Value { get; set; }
         public DateTime LastUpdate { get; set; }
+
+        // EF
+        public Account() { }
     }
 }

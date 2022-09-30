@@ -1,4 +1,5 @@
 ﻿using API.Caixa.Domain.Repositories.Base;
+using System.Collections.Generic;
 
 namespace API.Caixa.Domain.Entities
 {
@@ -6,5 +7,10 @@ namespace API.Caixa.Domain.Entities
     {
         public string Name { get; set; }
         public string Cpf { get; set; }
+
+        // EF
+        public User() { }
+
+        public List<Entry> Entries { get; set; }
     }
 }
