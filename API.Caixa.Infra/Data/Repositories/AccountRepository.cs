@@ -15,10 +15,10 @@ namespace API.Caixa.Infra.Data.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
-        //public void Add(Entry entry)
-        //{
-        //    _context.Entries.Add(entry);
-        //}
+        public Account GetAccount()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void Update(Account account)
         {

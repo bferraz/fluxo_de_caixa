@@ -5,6 +5,8 @@ namespace API.Caixa.Domain.Repositories
 {
     public interface IAccountRepository : IRepository<Account>
     {
+        Account GetAccount();
+
         void Update(Account account);
     }
 }
