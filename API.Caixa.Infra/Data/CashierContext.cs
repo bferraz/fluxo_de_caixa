@@ -1,6 +1,7 @@
 ﻿using API.Caixa.Domain.Entities;
 using API.Caixa.Domain.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace API.Caixa.Infra.Data
@@ -12,6 +13,17 @@ namespace API.Caixa.Infra.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Entry> Entries { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>().HasData(
+                new Account()
+                {
+                    Id = Guid.NewGuid(),
+                    Value = 0.0,
+                    LastUpdate = DateTime.UtcNow,
+                });
+        }
 
         public async Task<bool> Commit()
         {

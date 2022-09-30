@@ -4,14 +4,16 @@ using API.Caixa.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Caixa.Infra.Migrations
 {
     [DbContext(typeof(CashierContext))]
-    partial class CashierContextModelSnapshot : ModelSnapshot
+    [Migration("20220930214503_AggregationRoot")]
+    partial class AggregationRoot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,14 +36,6 @@ namespace API.Caixa.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d65d7e80-5f71-49f2-a19c-e95e67d84f60"),
-                            LastUpdate = new DateTime(2022, 9, 30, 22, 18, 12, 903, DateTimeKind.Utc).AddTicks(1749),
-                            Value = 0.0
-                        });
                 });
 
             modelBuilder.Entity("API.Caixa.Domain.Entities.Entry", b =>
