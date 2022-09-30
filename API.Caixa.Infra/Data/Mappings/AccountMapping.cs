@@ -11,6 +11,10 @@ namespace API.Caixa.Infra.Data.Mappings
             builder.HasKey(a => a.Id);
 
             builder.ToTable("Account");
+
+            builder.HasMany(a => a.Entries)
+                .WithOne(e => e.Account)
+                .HasForeignKey(e => e.AccountId);
         }
     }
 }

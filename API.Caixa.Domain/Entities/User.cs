@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace API.Caixa.Domain.Entities
 {
-    public class User : Entity
+    public class User : Entity, IAggregationRoot
     {
         public string Name { get; set; }
         public string Cpf { get; set; }

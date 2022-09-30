@@ -8,11 +8,19 @@ namespace API.Caixa.Infra.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Entry> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(e => e.Id);
+
+            builder.Property(e => e.Description)
+                .IsRequired()
+                .HasColumnType("varchar(150)");
 
             builder.HasOne(e => e.User)
                 .WithMany(u => u.Entries)
                 .HasForeignKey(e => e.UserId);
+
+            builder.HasOne(e => e.Account)
+                .WithMany(a => a.Entries)
+                .HasForeignKey(e => e.AccountId);
         }
     }
 }
