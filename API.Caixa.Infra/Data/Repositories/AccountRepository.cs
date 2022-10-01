@@ -1,6 +1,7 @@
 ﻿using API.Caixa.Domain.Entities;
 using API.Caixa.Domain.Repositories;
 using API.Caixa.Domain.Repositories.Base;
+using System.Threading.Tasks;
 
 namespace API.Caixa.Infra.Data.Repositories
 {
@@ -15,14 +16,14 @@ namespace API.Caixa.Infra.Data.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public Account GetAccount()
+        public async Task<Account> GetAccount()
         {
-            throw new System.NotImplementedException();
+            return await _context.Accounts.FindAsync();
         }
 
         public void Update(Account account)
         {
-            throw new System.NotImplementedException();
+            _context.Accounts.Update(account);
         }
 
         public void Dispose()
