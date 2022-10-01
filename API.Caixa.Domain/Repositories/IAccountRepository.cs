@@ -9,5 +9,7 @@ namespace API.Caixa.Domain.Repositories
         Task<Account> GetAccount();
 
         void Update(Account account);
+
+        void AddEntry(Entry entry);
     }
 }

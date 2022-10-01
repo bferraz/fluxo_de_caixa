@@ -1,7 +1,11 @@
-﻿using API.Caixa.Infra.Data;
+﻿using API.Caixa.Domain.Repositories;
+using API.Caixa.Infra.Data;
+using API.Caixa.Infra.Data.Repositories;
+using API.Caixa.Services;
 using API.Core.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +20,13 @@ namespace API.Caixa.Configuration
             services.AddDbContext<CashierContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAspNetUser, AspNetUser>();
+
+            services.AddScoped<AccountService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
 
             services.AddControllers();
 

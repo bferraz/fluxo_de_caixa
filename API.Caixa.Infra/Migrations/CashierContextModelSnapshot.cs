@@ -38,8 +38,8 @@ namespace API.Caixa.Infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d65d7e80-5f71-49f2-a19c-e95e67d84f60"),
-                            LastUpdate = new DateTime(2022, 9, 30, 22, 18, 12, 903, DateTimeKind.Utc).AddTicks(1749),
+                            Id = new Guid("20bd7709-aac9-4c25-98c2-f8740652d6ab"),
+                            LastUpdate = new DateTime(2022, 10, 1, 13, 4, 7, 963, DateTimeKind.Utc).AddTicks(527),
                             Value = 0.0
                         });
                 });
@@ -50,10 +50,7 @@ namespace API.Caixa.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("AccountId1")
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -70,7 +67,7 @@ namespace API.Caixa.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountId1");
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("UserId");
 
@@ -98,7 +95,9 @@ namespace API.Caixa.Infra.Migrations
                 {
                     b.HasOne("API.Caixa.Domain.Entities.Account", "Account")
                         .WithMany("Entries")
-                        .HasForeignKey("AccountId1");
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API.Caixa.Domain.Entities.User", "User")
                         .WithMany("Entries")

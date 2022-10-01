@@ -1,7 +1,17 @@
-﻿namespace API.Caixa.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Caixa.Models
 {
     public class EntryModel
     {
-        // TODO
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public int Type { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Range(1, 1000000, ErrorMessage = "O campo {0} deve estar entre {1} e {2}")]
+        public double Value { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Description { get; set; }        
     }
 }

@@ -14,15 +14,15 @@ namespace API.Caixa.Domain.Entities
         public Account() { }
         public List<Entry> Entries { get; set; }
 
-        public void NewEntry(Entry entry)
+        public void UpdateValue(Entry entry)
         {
             switch (entry.Type)
             {
                 case Enums.EntryType.Credit:
-                    Credit(Value);
+                    Credit(entry.Value);
                     break;
                 case Enums.EntryType.Debit:
-                    Debit(Value);
+                    Debit(entry.Value);
                     break;
             }
         }
@@ -43,7 +43,6 @@ namespace API.Caixa.Domain.Entities
                 Value -= value;
             else
                 throw new InsuficientFoundsException();
-
 
         }
     }
