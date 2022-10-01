@@ -11,7 +11,7 @@ namespace API.Identidade.Configuration
     {
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers();            
 
             services.AddScoped<AuthenticationService>();
             services.AddScoped<IAspNetUser, AspNetUser>();

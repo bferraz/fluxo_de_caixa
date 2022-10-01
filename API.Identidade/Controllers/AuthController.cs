@@ -1,8 +1,11 @@
 ﻿using API.Core.Controllers;
 using API.Identidade.Models;
 using API.Identidade.Services;
+using Core.Bus;
+using Core.Bus.Messages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace API.Identidade.Controllers
@@ -11,10 +14,12 @@ namespace API.Identidade.Controllers
     public class AuthController : BaseController
     {
         private readonly AuthenticationService _authenticationService;
+        private readonly IMessageBus _bus;
 
-        public AuthController(AuthenticationService authenticationService)
+        public AuthController(AuthenticationService authenticationService, IMessageBus bus)
         {
             _authenticationService = authenticationService;
+            _bus = bus;
         }
 
         [HttpPost("new-account")]
@@ -29,19 +34,35 @@ namespace API.Identidade.Controllers
                 EmailConfirmed = true
             };
 
-            var result = await _authenticationService.UserManager.CreateAsync(user, userRegistryModel.Password);
+            await _bus.RequestAsync<UserMessage, ResponseMessage>(new UserMessage(
+                    Guid.NewGuid(),
+                    user.Email,
+                    userRegistryModel.Cpf
+                ));
 
-            if (result.Succeeded)
-                return CustomResponse(await _authenticationService.GenerateJwt(userRegistryModel.Email));
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    AdicionarErroProcessamento(error.Description);
-                }
+            return CustomResponse();
 
-                return CustomResponse();
-            }
+            //var result = await _authenticationService.UserManager.CreateAsync(user, userRegistryModel.Password);
+
+            //if (result.Succeeded)
+            //{
+            //    await _bus.PublishAsync<UserMessage>(new UserMessage(
+            //        Guid.NewGuid(),
+            //        user.Email,
+            //        userRegistryModel.Cpf
+            //    ));
+
+            //    return CustomResponse(await _authenticationService.GenerateJwt(userRegistryModel.Email));
+            //}
+            //else
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        AdicionarErroProcessamento(error.Description);
+            //    }
+
+            //    return CustomResponse();
+            //}
         }
 
         [HttpPost("login")]

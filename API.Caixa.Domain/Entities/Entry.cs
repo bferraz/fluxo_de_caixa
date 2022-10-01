@@ -6,6 +6,15 @@ namespace API.Caixa.Domain.Entities
 {
     public class Entry : Entity
     {
+        public Entry(EntryType type, Guid accountId, double value, string description, Guid userId)
+        {
+            Type = type;
+            AccountId = accountId;
+            Value = value;
+            Description = description;
+            UserId = userId;
+        }
+
         public EntryType Type { get; set; }
         public Guid AccountId { get; set; } 
         public double Value { get; set; }

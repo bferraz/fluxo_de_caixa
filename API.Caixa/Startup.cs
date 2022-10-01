@@ -1,5 +1,7 @@
+using API.Caixa.BackgroundServices;
 using API.Caixa.Configuration;
 using API.Core.Identity;
+using Core.Bus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,10 @@ namespace API.Caixa
             services.AddApiConfiguration(Configuration);
 
             services.AddJwtConfiguration(Configuration);
+
+            services.AddSingleton<IMessageBus>(
+                new MessageBus(Configuration.GetSection("MessageQueueConnection:MessageBus").Value)
+            ).AddHostedService<UserRegistryIntegrationHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

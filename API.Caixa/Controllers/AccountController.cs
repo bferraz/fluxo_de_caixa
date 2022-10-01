@@ -1,4 +1,5 @@
 ﻿using API.Caixa.Domain.Entities;
+using API.Caixa.Domain.Repositories;
 using API.Caixa.Models;
 using API.Caixa.Services;
 using API.Core.Controllers;
@@ -16,16 +17,36 @@ namespace API.Caixa.Controllers
     public class AccountController : BaseController
     {
         private readonly AccountService _accountService;
+        private readonly IAccountRepository _accountRepository;
         private readonly IAspNetUser _user;
         private readonly IMapper _mapper;
 
-        public AccountController(AccountService 
-            accountService, IAspNetUser user,
+        public AccountController(AccountService accountService,
+            IAccountRepository accountRepository,
+            IAspNetUser user, 
             IMapper mapper)
         {
             _accountService = accountService;
+            _accountRepository = accountRepository;
             _user = user;
             _mapper = mapper;
+        }
+
+        [HttpGet("show-info")]
+        public async Task<ActionResult> ShowAccountInfo()
+        {
+            try
+            {
+                var account = await _accountRepository.GetAccount();
+
+                return CustomResponse(_mapper.Map<AccountModel>(account));
+            }
+            catch (Exception ex)
+            {
+                Erros.Add(ex.Message);
+
+                return CustomResponse();
+            }
         }
 
         [HttpPost("add-entry")]        

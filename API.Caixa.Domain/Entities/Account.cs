@@ -7,12 +7,20 @@ namespace API.Caixa.Domain.Entities
 {
     public class Account : Entity, IAggregationRoot
     {
+        public Account(double value, DateTime lastUpdate)
+        {
+            Value = value;
+            LastUpdate = lastUpdate;
+        }
+
         public double Value { get; set; }
         public DateTime LastUpdate { get; set; }
 
-        // EF
-        public Account() { }
+        // EF Relationship
         public List<Entry> Entries { get; set; }
+
+        // EF Ctor
+        public Account() { }       
 
         public void UpdateValue(Entry entry)
         {
@@ -39,7 +47,7 @@ namespace API.Caixa.Domain.Entities
         {
             if (value < 0)
                 throw new InvalidDebitException();
-            else if (this.Value >= value)
+            else if (value <= this.Value)
                 Value -= value;
             else
                 throw new InsuficientFoundsException();

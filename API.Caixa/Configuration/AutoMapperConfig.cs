@@ -9,6 +9,7 @@ namespace API.Caixa.Configuration
         public AutoMapperConfig()
         {
             CreateMap<EntryModel, Entry>().ReverseMap();
+            CreateMap<AccountModel, Account>().ReverseMap();
         }
     }
 }

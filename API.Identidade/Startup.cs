@@ -1,5 +1,6 @@
 using API.Core.Identity;
 using API.Identidade.Configuration;
+using Core.Bus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,10 @@ namespace API.Identidade
             services.AddIdentityConfiguration(Configuration);
 
             services.AddJwtConfiguration(Configuration);
+
+            services.AddSingleton<IMessageBus>(
+                new MessageBus(Configuration.GetSection("MessageQueueConnection:MessageBus").Value)
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
