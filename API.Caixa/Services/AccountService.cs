@@ -1,6 +1,8 @@
 ﻿using API.Caixa.Domain.Entities;
 using API.Caixa.Domain.Exceptions;
 using API.Caixa.Domain.Repositories;
+using Core.Bus;
+using Core.Bus.Messages;
 using System;
 using System.Threading.Tasks;
 
@@ -9,19 +11,25 @@ namespace API.Caixa.Services
     public class AccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IMessageBus _bus;
 
-        public AccountService(IAccountRepository accountRepository)
+        public AccountService(IAccountRepository accountRepository,
+            IUserRepository userRepository,
+            IMessageBus bus)
         {
             _accountRepository = accountRepository;
+            _userRepository = userRepository;
+            _bus = bus;
         }
 
-        public async Task<bool> AddNewEntry(Guid UserId, Entry entry)
+        public async Task<bool> AddNewEntry(Guid userId, Entry entry)
         {
             try
             {
                 Account account = await _accountRepository.GetAccount();
 
-                entry.UserId = UserId;
+                entry.UserId = userId;
                 entry.AccountId = account.Id;
 
                 account.UpdateValue(entry);
@@ -29,7 +37,12 @@ namespace API.Caixa.Services
                 _accountRepository.Update(account);
                 _accountRepository.AddEntry(entry);
 
-                return await _accountRepository.UnitOfWork.Commit();
+                await SendEntryToConsultDB(userId, account, entry);
+
+                return true;
+
+                //return await _accountRepository.UnitOfWork.Commit();
+
             }
             catch (InvalidCreditException)
             {
@@ -47,6 +60,25 @@ namespace API.Caixa.Services
             {
                 throw ex;
             }
+        }
+
+        private async Task SendEntryToConsultDB(Guid userId, Account account, Entry entry)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            AccountEntryMessage message = new AccountEntryMessage(
+                account.Id,
+                user.Name,
+                (int)entry.Type,
+                entry.Value,
+                account.Value,
+                entry.Description,
+                DateTime.Now);
+
+            if (!message.IsValid())
+                throw new Exception("Ocorreu um erro ao salvar a operação");
+
+            _ = _bus.PublishAsync(message);
         }
     }
 }

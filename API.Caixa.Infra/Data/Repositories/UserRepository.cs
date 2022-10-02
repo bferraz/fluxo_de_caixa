@@ -26,6 +26,11 @@ namespace API.Caixa.Infra.Data.Repositories
             return await _context.Users.FirstOrDefaultAsync(x => x.Cpf == cpf);
         }
 
+        public async Task<User> GetUserById(Guid id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public void Insert(User user)
         {
             _context.Users.Add(user);

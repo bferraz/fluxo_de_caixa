@@ -27,6 +27,12 @@ namespace Core.Bus
             _bus.Publish(message);
         }
 
+        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
+        {
+            TryConnect();
+            _bus.SubscribeAsync(subscriptionId, onMessage);
+        }
+
         public async Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
             where TRequest : Message
             where TResponse : ResponseMessage

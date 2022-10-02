@@ -1,4 +1,6 @@
 ﻿using API.Core.Identity;
+using FluxoDeCaixa.Relatorios.API.NoSQLDatabase.Contexts;
+using FluxoDeCaixa.Relatorios.API.NoSQLDatabase.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,18 @@ namespace FluxoDeCaixa.Relatorios.API.Configuration
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddSingleton<AccountEntryContext>(db =>
+            {
+                return new AccountEntryContext(
+                    configuration.GetSection("MongoDBConnection:ConnectionString").Value,
+                    configuration.GetSection("MongoDBConnection:Database").Value
+                );
+            });
+
+            services.AddScoped<IAccountEntryRepository, AccountEntryRepository>();
 
             return services;
         }

@@ -11,6 +11,8 @@ namespace Core.Bus
 
         Task PublishAsync<T>(T message) where T : Message;
 
+        void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class;
+
         Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
             where TRequest : Message
             where TResponse : ResponseMessage;
