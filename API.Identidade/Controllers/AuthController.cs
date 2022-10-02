@@ -34,35 +34,32 @@ namespace API.Identidade.Controllers
                 EmailConfirmed = true
             };
 
-            await _bus.RequestAsync<UserMessage, ResponseMessage>(new UserMessage(
-                    Guid.NewGuid(),
-                    user.Email,
-                    userRegistryModel.Cpf
-                ));
+            var result = await _authenticationService.UserManager.CreateAsync(user, userRegistryModel.Password);
 
-            return CustomResponse();
+            if (result.Succeeded)
+            {
+                var response = await _bus.RequestAsync<UserMessage, ResponseMessage>(new UserMessage(
+                        Guid.Parse(user.Id),
+                        user.Email,
+                        userRegistryModel.Cpf,
+                        userRegistryModel.Name
+                    ));
 
-            //var result = await _authenticationService.UserManager.CreateAsync(user, userRegistryModel.Password);
+                if (response.ValidationResult.IsValid)
+                    return CustomResponse(await _authenticationService.GenerateJwt(userRegistryModel.Email));
+                else
+                {
+                    await _authenticationService.UserManager.DeleteAsync(user);
 
-            //if (result.Succeeded)
-            //{
-            //    await _bus.PublishAsync<UserMessage>(new UserMessage(
-            //        Guid.NewGuid(),
-            //        user.Email,
-            //        userRegistryModel.Cpf
-            //    ));
+                    return CustomResponse(response.ValidationResult);
+                }
+            }
+            else
+            {
+                Erros.Add("Ocorreu um erro ao criar o usuário");
 
-            //    return CustomResponse(await _authenticationService.GenerateJwt(userRegistryModel.Email));
-            //}
-            //else
-            //{
-            //    foreach (var error in result.Errors)
-            //    {
-            //        AdicionarErroProcessamento(error.Description);
-            //    }
-
-            //    return CustomResponse();
-            //}
+                return CustomResponse();
+            }
         }
 
         [HttpPost("login")]

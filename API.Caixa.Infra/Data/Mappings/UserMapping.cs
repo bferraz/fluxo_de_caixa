@@ -18,6 +18,10 @@ namespace API.Caixa.Infra.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(11)");
 
+            builder.Property(u => u.Email)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
             builder.HasMany(u => u.Entries)
                 .WithOne(e => e.User)
                 .HasForeignKey(e => e.User);

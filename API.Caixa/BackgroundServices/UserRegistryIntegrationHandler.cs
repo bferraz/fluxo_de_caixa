@@ -1,4 +1,8 @@
-﻿using Core.Bus;
+﻿using API.Caixa.Domain.Entities;
+using API.Caixa.Domain.Repositories;
+using API.Caixa.Infra.Data.Repositories;
+using AutoMapper;
+using Core.Bus;
 using Core.Bus.Messages;
 using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,17 +17,19 @@ namespace API.Caixa.BackgroundServices
     {
         private readonly IMessageBus _bus;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IMapper _mapper;
 
-        public UserRegistryIntegrationHandler(IMessageBus bus, IServiceProvider serviceProvider)
+        public UserRegistryIntegrationHandler(IMessageBus bus, IServiceProvider serviceProvider, IMapper mapper)
         {
             _bus = bus;
             _serviceProvider = serviceProvider;
+            _mapper = mapper;
         }
 
         private void SetResponder()
         {
             _bus.RespondAsync<UserMessage, ResponseMessage>(async request =>
-               await RegistryUser(request));
+               await UserRegistry(request));
 
             _bus.AdvancedBus.Connected += OnConnect;
         }
@@ -39,18 +45,34 @@ namespace API.Caixa.BackgroundServices
             SetResponder();
         }
 
-        private async Task<ResponseMessage> RegistryUser(UserMessage message)
+        private async Task<ResponseMessage> UserRegistry(UserMessage message)
         {
-            //var clienteCommand = new RegistrarClienteCommand(message.Id, message.Nome, message.Email, message.Cpf);
-            ValidationResult sucesso = new ValidationResult();
+            ValidationResult result = new ValidationResult();
 
-            //using (var scope = _serviceProvider.CreateScope())
-            //{
-            //    var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
-            //    sucesso = await mediator.EnviarComando(clienteCommand);
-            //}
+            if (!message.IsValid())
+                result = message.ValidationResult;
+            else
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                    var user = await userRepository.GetUserByCpf(message.Cpf);
 
-            return new ResponseMessage(sucesso);
+                    if (user != null)
+                        result.Errors.Add(new ValidationFailure("Cpf", "Já existe um usuário cadastrado com o CPF informado"));
+                    else
+                    {
+                        userRepository.Insert(_mapper.Map<User>(message));
+
+                        bool success = await userRepository.UnitOfWork.Commit();
+
+                        if (!success)
+                            result.Errors.Add(new ValidationFailure(string.Empty, "Ocorreu um erro ao tentar salvar os dados na base"));
+                    }
+                }
+            }
+
+            return new ResponseMessage(result);            
         }
     }
 }

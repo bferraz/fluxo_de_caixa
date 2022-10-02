@@ -5,7 +5,7 @@ namespace API.Identidade.Models
     public class UserRegistryModel
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Cpf { get; set; }
