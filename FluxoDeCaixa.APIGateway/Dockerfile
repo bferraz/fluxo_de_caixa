@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["FluxoDeCaixa.APIGateway/FluxoDeCaixa.APIGateway.csproj", "FluxoDeCaixa.APIGateway/"]
+COPY ["./FluxoDeCaixa.APIGateway/FluxoDeCaixa.APIGateway.csproj", "FluxoDeCaixa.APIGateway/"]
 RUN dotnet restore "FluxoDeCaixa.APIGateway/FluxoDeCaixa.APIGateway.csproj"
 COPY . .
 WORKDIR "/src/FluxoDeCaixa.APIGateway"

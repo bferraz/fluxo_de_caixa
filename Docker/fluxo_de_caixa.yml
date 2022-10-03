@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: fluxo-de-caixa-rabbit
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fluxo-de-caixa-sql-server
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "MeuDB@123"
+      ACCEPT_EULA: "Y"
+
+  api-gateway:
+    image: "bferraz1990/fluxo-de-caixa-api-gateway:latest"
+    container_name: "fluxo-de-caixa-api-gateway"
+    build:
+      context: "../"
+      dockerfile: "./FluxoDeCaixa.APIGateway/Dockerfile"
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5003
+
+  api-identidade:
+    image: "bferraz1990/fluxo-de-caixa-api-identidade:latest"
+    container_name: "fluxo-de-caixa-api-identidade"
+    build:
+      context: "../"
+      dockerfile: "./API.Identidade/Dockerfile"
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5001
