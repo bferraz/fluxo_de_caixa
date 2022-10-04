@@ -6,10 +6,11 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["FluxoDeCaixa.Relatorios.API/FluxoDeCaixa.Relatorios.API.csproj", "FluxoDeCaixa.Relatorios.API/"]
+COPY ["./FluxoDeCaixa.Relatorios.API/FluxoDeCaixa.Relatorios.API.csproj", "FluxoDeCaixa.Relatorios.API/"]
+COPY ["./API.Core/Core.csproj", "API.Core/"]
 RUN dotnet restore "FluxoDeCaixa.Relatorios.API/FluxoDeCaixa.Relatorios.API.csproj"
 COPY . .
-WORKDIR "/src/FluxoDeCaixa.Relatorios.API"
+WORKDIR "FluxoDeCaixa.Relatorios.API"
 RUN dotnet build "FluxoDeCaixa.Relatorios.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

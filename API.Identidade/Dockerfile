@@ -7,7 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["./API.Identidade/API.Identidade.csproj", "API.Identidade/"]
-COPY ["../API.Core/Core.csproj", "API.Core/"]
+COPY ["./API.Core/Core.csproj", "API.Core/"]
 RUN dotnet restore "./API.Identidade/API.Identidade.csproj"
 COPY . .
 WORKDIR "API.Identidade"

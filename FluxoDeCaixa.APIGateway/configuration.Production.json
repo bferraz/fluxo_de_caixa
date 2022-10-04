@@ -17,7 +17,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "fluxo-de-caixa-api-caixa",
           "Port": 5000
         }
       ],
@@ -33,7 +33,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "fluxo-de-caixa-api-relatorios",
           "Port": 5002
         }
       ],

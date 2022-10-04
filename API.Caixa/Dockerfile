@@ -6,7 +6,8 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["API.Caixa/API.Caixa.csproj", "API.Caixa/"]
+COPY ["./API.Caixa/API.Caixa.csproj", "API.Caixa/"]
+COPY ["./API.Core/Core.csproj", "API.Core/"]
 RUN dotnet restore "API.Caixa/API.Caixa.csproj"
 COPY . .
 WORKDIR "/src/API.Caixa"

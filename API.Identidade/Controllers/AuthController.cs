@@ -22,12 +22,6 @@ namespace API.Identidade.Controllers
             _bus = bus;
         }
 
-        [HttpGet("teste")]
-        public async Task<ActionResult> Teste()
-        {
-            return CustomResponse("Teste");
-        }
-
         [HttpPost("new-account")]
         public async Task<ActionResult> Registry(UserRegistryModel userRegistryModel)
         {

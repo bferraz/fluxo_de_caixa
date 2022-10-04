@@ -39,9 +39,7 @@ namespace API.Caixa.Services
 
                 await SendEntryToConsultDB(userId, account, entry);
 
-                return true;
-
-                //return await _accountRepository.UnitOfWork.Commit();
+                return await _accountRepository.UnitOfWork.Commit();
 
             }
             catch (InvalidCreditException)
