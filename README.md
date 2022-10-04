@@ -1,6 +1,6 @@
 ## Fluxo de Caixa
 
-Esta é uma aplicação simples de fluxo de caixa, porém, que emprega boas práticas de arquitetura de software, nela são utilizados os conceitos de DDD, microsserviços, testes de unidade e testes de integração (apenas no contexto de lançamentos pela simplicidade na codificação, não que não fosse necessário nos demais serviços), mensageria e API Gateway. Ela é composta por 4 microsserviços, sendo estes: API Gateway, API de Identidade, API de Lançamentos e API de Relatórios, essas APIs foram construídas em .NET Core e rodam em containers Docker. O API Gateway foi desenvolvido utilizando a biblioteca Ocelot, ela é responsável pelo controle de rota e validação do JWT Token, de forma que caso o usuário não esteja devidamente autenticado, sua requisição nem bata nas APIs internas. Os demais microsserviços possuem cada um seu banco de dados, sendo dois SQL Servers (Databases diferentes rodando em um mesmo servidor containerizado) e um o MongoDB para os relatórios. Esses microsserviços comunicam-se entre si utilizando uma fila do Rabbit MQ.
+Esta é uma aplicação simples de fluxo de caixa, porém, que emprega boas práticas de arquitetura de software, nela são utilizados os conceitos de DDD, microsserviços, testes de unidade e testes de integração (apenas no contexto de lançamentos pela simplicidade na codificação, não que não fosse necessário nos demais serviços), mensageria e API Gateway. Ela é composta por 4 microsserviços, sendo estes: API Gateway, API de Identidade, API de Lançamentos e API de Relatórios, essas APIs foram construídas em .NET Core e rodam em containers Docker. O API Gateway foi desenvolvido utilizando a biblioteca [Ocelot](https://ocelot.readthedocs.io/en/latest/introduction/gettingstarted.html), ela é responsável pelo controle de rota e validação do JWT Token, de forma que caso o usuário não esteja devidamente autenticado, sua requisição nem bata nas APIs internas. Os demais microsserviços possuem cada um seu banco de dados, sendo dois SQL Servers (Databases diferentes rodando em um mesmo servidor containerizado) e um o [MongoDB](https://www.mongodb.com/) para os relatórios. Esses microsserviços comunicam-se entre si utilizando uma fila do [Rabbit MQ](https://www.rabbitmq.com).
 
 #### Desenho da solução:
 
@@ -10,7 +10,7 @@ Esta é uma aplicação simples de fluxo de caixa, porém, que emprega boas prá
 
 ## Como rodar esse projeto
 
-Como pré-requisitos, será necessário possuir o Docker instalado em sua máquina e o Visual Studio ou VS Code com o SDK do .NET Core 3.1 ou superior.
+Como pré-requisitos, será necessário possuir o [Docker](https://www.docker.com/) instalado em sua máquina e o [Visual Studio](https://visualstudio.microsoft.com/pt-br/vs/) ou [VS Code](https://code.visualstudio.com/) com o [SDK do .NET Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1) ou superior.
 
 ### Subindo os containers com Docker-Compose
 
@@ -43,3 +43,6 @@ Update-Database -StartUpProject API.Caixa
 </br>
 
 >Nota: Se você estiver utilizando o VS Code ou outra ferramenta, pode rodar os comandos do Entity Framework através da linha de comando do dotnet ([documentação](https://www.entityframeworktutorial.net/efcore/cli-commands-for-ef-core-migration.aspx))
+
+</br>
+
