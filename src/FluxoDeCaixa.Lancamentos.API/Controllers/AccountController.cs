@@ -32,13 +32,6 @@ namespace FluxoDeCaixa.Caixa.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("test")]
-        [AllowAnonymous]
-        public async Task<ActionResult> Test()
-        {
-            return CustomResponse();
-        }
-
         [HttpGet("show-info")]
         public async Task<ActionResult> ShowAccountInfo()
         {
