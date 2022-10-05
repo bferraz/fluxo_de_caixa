@@ -45,6 +45,26 @@ namespace FluxoDeCaixa.Relatorios.API.Controllers
             }
         }
 
+        [HttpGet("show-daily-report")]
+        public async Task<ActionResult> ShowDailyReport(int day, int month, int year)
+        {
+            try
+            {
+                DateTime initialDate = new DateTime(year, month, day);
+                DateTime endDate = new DateTime(year, month, day).AddDays(1);
+
+                var reportCollection = await _accountEntryRepository.FindAsync(x => x.EntryDate > initialDate && x.EntryDate < endDate);
+
+                return CustomResponse(GetReportModel(reportCollection));
+            }
+            catch (Exception ex)
+            {
+                Erros.Add(ex.Message);
+
+                return CustomResponse();
+            }
+        }
+
         private List<AccountEntryModel> GetReportModel(IEnumerable<AccountEntry> entries)
         {
             List<AccountEntryModel> accountEntries = new List<AccountEntryModel>();
