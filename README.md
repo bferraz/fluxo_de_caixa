@@ -29,7 +29,7 @@ Para iniciar o banco de dados da API de Indentidade no Visual Studio, rode o seg
 No Package Manager Console, execute
 
 ```powershell
-Update-Database -StartUpProject API.Identidade
+Update-Database -StartUpProject FluxoDeCaixa.Identidade.API
 ```
 
 </br>
@@ -37,7 +37,7 @@ Update-Database -StartUpProject API.Identidade
 Para iniciar o banco de dados da API de Lançamentos no Visual Studio, rode o seguinte comando:
 
 ```powershell
-Update-Database -StartUpProject API.Caixa
+Update-Database -StartUpProject FluxoDeCaixa.Lancamentos.API
 ```
 
 </br>
