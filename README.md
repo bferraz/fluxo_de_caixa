@@ -46,3 +46,6 @@ Update-Database -StartUpProject API.Caixa
 
 </br>
 
+## Utilização das APIs
+
+TODO!
