@@ -1,6 +1,6 @@
-using API.Caixa.Domain.Entities;
-using API.Caixa.Domain.Enums;
-using API.Caixa.Domain.Exceptions;
+using FluxoDeCaixa.Caixa.Domain.Entities;
+using FluxoDeCaixa.Caixa.Domain.Enums;
+using FluxoDeCaixa.Caixa.Domain.Exceptions;
 using System;
 using Xunit;
 
