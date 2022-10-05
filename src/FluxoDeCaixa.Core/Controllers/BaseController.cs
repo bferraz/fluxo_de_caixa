@@ -16,7 +16,11 @@ namespace API.Core.Controllers
         {
             if (OperacaoValida())
             {
-                return Ok(result);
+                return Ok(
+                    result.GetType().Equals(typeof(string)) ? 
+                        new { message = result } : 
+                        result
+                    );
             }
 
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
