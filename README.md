@@ -34,7 +34,7 @@ Update-Database -StartUpProject FluxoDeCaixa.Identidade.API
 
 </br>
 
-Para iniciar o banco de dados da API de Lançamentos no Visual Studio, selecione o projeto **FluxoDeCaixa.Lancamentos.Infra** como **Default Projec** et rode o seguinte comando:
+Para iniciar o banco de dados da API de Lançamentos no Visual Studio, selecione o projeto **FluxoDeCaixa.Lancamentos.Infra** como **Default Project** et rode o seguinte comando:
 
 ```powershell
 Update-Database -StartUpProject FluxoDeCaixa.Lancamentos.API
